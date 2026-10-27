@@ -14,7 +14,8 @@ public class Main {
             out.print("P3\n" + imageWidth + " " + imageHeight + "\n255\n");
 
             for (int j = 0; j < imageHeight; j++) {
-
+                System.err.print("\rScanlines remaining: " + (imageHeight - j) + " ");
+                System.err.flush();
 
                 for (int i = 0; i < imageWidth; i++) {
                     double r = (double) i / (imageWidth - 1);
@@ -28,7 +29,8 @@ public class Main {
                     out.print(ir + " " + ig + " " + ib + "\n");
                 }
             }
-        }
 
+            System.err.print("\rDone.                 \n");
+        }
     }
 }
