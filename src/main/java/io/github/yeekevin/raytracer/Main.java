@@ -18,15 +18,11 @@ public class Main {
                 System.err.flush();
 
                 for (int i = 0; i < imageWidth; i++) {
-                    double r = (double) i / (imageWidth - 1);
-                    double g = (double) j / (imageHeight - 1);
-                    double b = 0.0;
-
-                    int ir = (int) (255.999 * r);
-                    int ig = (int) (255.999 * g);
-                    int ib = (int) (255.999 * b);
-
-                    out.print(ir + " " + ig + " " + ib + "\n");
+                    Vec3 pixelColor = new Vec3(
+                            (double) i / (imageWidth - 1),
+                            (double) j / (imageHeight - 1),
+                            0);
+                    Color.writeColor(out, pixelColor);
                 }
             }
 
