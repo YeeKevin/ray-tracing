@@ -1,4 +1,4 @@
-package org.example;
+package io.github.yeekevin.raytracer;
 
 
 import java.io.*;

@@ -36,7 +36,7 @@ Run `org.example.Main` from your IDE, or from the command line:
 
 ```sh
 ./gradlew build
-java -cp build/classes/java/main org.example.Main
+java -cp build/classes/java/main io.github.yeekevin.raytracer.Main
 ```
 
 That writes `image.ppm` to the project root. You can open it with an image viewer that supports PPM, such as Preview on macOS, GIMP, or an online PPM viewer.

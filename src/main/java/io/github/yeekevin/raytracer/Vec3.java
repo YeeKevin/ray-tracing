@@ -1,4 +1,4 @@
-package org.example;
+package io.github.yeekevin.raytracer;
 
 public record Vec3(double x, double y, double z) {
 
