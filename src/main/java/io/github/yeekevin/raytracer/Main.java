@@ -6,7 +6,10 @@ import java.io.*;
 public class Main {
 
     static Vec3 rayColor(Ray r) {
-        return new Vec3(0, 0, 0);
+        Vec3 unitDirection = r.direction().unitVector();
+        double a = 0.5 * (unitDirection.y() + 1.0);
+        return new Vec3(1.0, 1.0, 1.0).times(1.0 - a)
+                .plus(new Vec3(0.5, 0.7, 1.0).times(a));
     }
 
     public static void main(String[] args) throws IOException {
@@ -28,7 +31,7 @@ public class Main {
         Vec3 viewportU = new Vec3(viewportWidth, 0, 0);
         Vec3 viewportV = new Vec3(0, -viewportHeight, 0);
 
-        // Calculate the horizontal and vertical delta vectors form pixel to pixel
+        // Calculate the horizontal and vertical delta vectors from pixel to pixel
         Vec3 pixelDeltaU = viewportU.div(imageWidth);
         Vec3 pixelDeltaV = viewportV.div(imageHeight);
 
