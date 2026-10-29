@@ -9,7 +9,7 @@ The point is to learn how ray tracing works and get more practice with Java. It 
 - [x] Output an image (PPM format)
 - [x] `Vec3` vector class (a Java `record`)
 - [x] Color utility
-- [ ] Rays, a simple camera, and background
+- [x] Rays, a simple camera, and background
 - [ ] Adding a sphere
 - [ ] Surface normals and multiple objects
 - [ ] Antialiasing
