@@ -4,10 +4,23 @@ package io.github.yeekevin.raytracer;
 import java.io.*;
 
 public class Main {
+
+    static Vec3 rayColor(Ray r) {
+        return new Vec3(0, 0, 0);
+    }
+
     public static void main(String[] args) throws IOException {
         // Image
-        int imageWidth = 256;
-        int imageHeight = 256;
+        double aspectRatio = 16.0 / 9.0;
+        int imageWidth = 400;
+
+        // Calculate the image height and ensure that it's at least 1
+        int imageHeight = (int) (imageWidth / aspectRatio);
+        imageHeight = Math.max(imageHeight, 1);
+
+        // Viewport widths less than one are pok since they are real valued
+        double viewportHeight = 2.0;
+        double viewportWidth = viewportHeight * ((double) imageWidth / imageHeight);
 
         // Render
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("image.ppm")))) {
