@@ -7,15 +7,15 @@ public class Main {
 
     static double hitSphere(Vec3 center, double radius, Ray r) {
         Vec3 oc = center.minus(r.origin());
-        double a = r.direction().dot(r.direction());
-        double b = -2.0 * r.direction().dot(oc);
-        double c = oc.dot(oc) - radius * radius;
-        double discriminant = b * b - 4 * a * c;
+        double a = r.direction().lengthSquared();
+        double h = r.direction().dot(oc);
+        double c = oc.lengthSquared() - radius * radius;
+        double discriminant = h * h - a * c;
 
         if (discriminant < 0) {
             return -1.0;
         } else {
-            return (-b - Math.sqrt(discriminant)) / (2.0 * a);
+            return (h - Math.sqrt(discriminant)) / a;
         }
     }
 
