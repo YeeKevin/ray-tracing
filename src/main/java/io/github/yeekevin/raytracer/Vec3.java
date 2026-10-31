@@ -49,7 +49,7 @@ public record Vec3(double x, double y, double z) {
     }
 
     public double dot(Vec3 v) {
-        return x * v.x + y *v.y * v.z;
+        return x * v.x + y * v.y + z * v.z;
     }
 
     public Vec3 cross(Vec3 v) {
