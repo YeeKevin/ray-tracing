@@ -5,18 +5,25 @@ import java.io.*;
 
 public class Main {
 
-    static boolean hitSphere(Vec3 center, double radius, Ray r) {
+    static double hitSphere(Vec3 center, double radius, Ray r) {
         Vec3 oc = center.minus(r.origin());
         double a = r.direction().dot(r.direction());
         double b = -2.0 * r.direction().dot(oc);
         double c = oc.dot(oc) - radius * radius;
         double discriminant = b * b - 4 * a * c;
-        return discriminant >= 0;
+
+        if (discriminant < 0) {
+            return -1.0;
+        } else {
+            return (-b - Math.sqrt(discriminant)) / (2.0 * a);
+        }
     }
 
     static Vec3 rayColor(Ray r) {
-        if (hitSphere(new Vec3(0, 0, -1), 0.5, r)) {
-            return new Vec3(1, 0, 0);
+        double t = hitSphere(new Vec3(0, 0, -1), 0.5, r);
+        if (t > 0.0) {
+            Vec3 n = r.at(t).minus(new Vec3(0, 0, -1)).unitVector();
+            return new Vec3(n.x() + 1, n.y() + 1, n.z() + 1).times(0.5);
         }
 
         Vec3 unitDirection = r.direction().unitVector();
