@@ -12,4 +12,11 @@ public class HitRecord {
         frontFace = r.direction().dot(outwardNormal) < 0;
         normal = frontFace ? outwardNormal : outwardNormal.negate();
     }
+
+    public void copyFrom(HitRecord other) {
+        this.p = other.p;
+        this.normal = other.normal;
+        this.t = other.t;
+        this.frontFace = other.frontFace;
+    }
 }
