@@ -10,7 +10,7 @@ The point is to learn how ray tracing works and get more practice with Java. It 
 - [x] `Vec3` vector class (a Java `record`)
 - [x] Color utility
 - [x] Rays, a simple camera, and background
-- [ ] Adding a sphere
+- [x] Adding a sphere
 - [ ] Surface normals and multiple objects
 - [ ] Antialiasing
 - [ ] Diffuse materials
