@@ -7,7 +7,7 @@ public class Main {
 
     static Vec3 rayColor(Ray r, Hittable world) {
         HitRecord rec = new HitRecord();
-        if (world.hit(r, 0, RtWeekend.INFINITY, rec)) {
+        if (world.hit(r, new Interval(0, RtWeekend.INFINITY), rec)) {
             return rec.normal.plus(new Vec3(1, 1, 1)).times(0.5);
         }
 

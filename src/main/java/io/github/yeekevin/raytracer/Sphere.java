@@ -10,7 +10,7 @@ public class Sphere implements Hittable {
     }
 
     @Override
-    public boolean hit(Ray r, double rayTmin, double rayTmax, HitRecord rec) {
+    public boolean hit(Ray r, Interval rayT, HitRecord rec) {
         Vec3 oc = center.minus(r.origin());
         double a = r.direction().lengthSquared();
         double h = r.direction().dot(oc);
@@ -25,12 +25,13 @@ public class Sphere implements Hittable {
 
         // Find the nearest root that lies in the acceptable range
         double root = (h - sqrtd) / a;
-        if (root <= rayTmin || rayTmax <= root) {
+        if (!rayT.surrounds(root)) {
             root = (h + sqrtd) / a;
-            if (root <= rayTmin || rayTmax <= root) {
+            if (!rayT.surrounds(root)) {
                 return false;
             }
         }
+
         rec.t = root;
         rec.p = r.at(rec.t);
         Vec3 outwardNormal = rec.p.minus(center).div(radius);
