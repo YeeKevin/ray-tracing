@@ -5,25 +5,10 @@ import java.io.*;
 
 public class Main {
 
-    static double hitSphere(Vec3 center, double radius, Ray r) {
-        Vec3 oc = center.minus(r.origin());
-        double a = r.direction().lengthSquared();
-        double h = r.direction().dot(oc);
-        double c = oc.lengthSquared() - radius * radius;
-        double discriminant = h * h - a * c;
-
-        if (discriminant < 0) {
-            return -1.0;
-        } else {
-            return (h - Math.sqrt(discriminant)) / a;
-        }
-    }
-
-    static Vec3 rayColor(Ray r) {
-        double t = hitSphere(new Vec3(0, 0, -1), 0.5, r);
-        if (t > 0.0) {
-            Vec3 n = r.at(t).minus(new Vec3(0, 0, -1)).unitVector();
-            return new Vec3(n.x() + 1, n.y() + 1, n.z() + 1).times(0.5);
+    static Vec3 rayColor(Ray r, Hittable world) {
+        HitRecord rec = new HitRecord();
+        if (world.hit(r, 0, RtWeekend.INFINITY, rec)) {
+            return rec.normal.plus(new Vec3(1, 1, 1)).times(0.5);
         }
 
         Vec3 unitDirection = r.direction().unitVector();
@@ -40,6 +25,11 @@ public class Main {
         // Calculate the image height and ensure that it's at least 1
         int imageHeight = (int) (imageWidth / aspectRatio);
         imageHeight = Math.max(imageHeight, 1);
+
+        // World
+        HittableList world = new HittableList();
+        world.add(new Sphere(new Vec3(0, 0, -1), 0.5));
+        world.add(new Sphere(new Vec3(0, -100.5, -1), 100));
 
         // Camera
         double focalLength = 1.0;
@@ -78,7 +68,7 @@ public class Main {
                     Vec3 rayDirection = pixelCenter.minus(cameraCenter);
                     Ray r = new Ray(cameraCenter, rayDirection);
 
-                    Vec3 pixelColor = rayColor(r);
+                    Vec3 pixelColor = rayColor(r, world);
                     Color.writeColor(out, pixelColor);
                 }
             }

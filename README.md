@@ -11,7 +11,7 @@ The point is to learn how ray tracing works and get more practice with Java. It 
 - [x] Color utility
 - [x] Rays, a simple camera, and background
 - [x] Adding a sphere
-- [ ] Surface normals and multiple objects
+- [x] Surface normals and multiple objects
 - [ ] Antialiasing
 - [ ] Diffuse materials
 - [ ] Metal
