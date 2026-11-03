@@ -8,12 +8,14 @@ import java.io.PrintWriter;
 public class Camera {
     public double aspectRatio = 1.0;  // Ratio of image width over height
     public int imageWidth = 100;      // Rendered image width in pixel count
+    public int samplesPerPixel = 10;  // Count of random samples for each pixel
 
     private int imageHeight;          // Rendered image height
     private Vec3 center;              // Camera center
     private Vec3 pixel00Loc;          // Location of pixel 0, 0
     private Vec3 pixelDeltaU;         // Offset to pixel to the right
     private Vec3 pixelDeltaV;         // Offset to pixel below
+    private double pixelSamplesScale; // Color scale factor for a sum of pixel samples
 
     public void render(Hittable world) throws IOException {
         initialize();
@@ -25,15 +27,23 @@ public class Camera {
                 System.err.print("\rScanlines remaining: " + (imageHeight - j) + " ");
                 System.err.flush();
 
+//                for (int i = 0; i < imageWidth; i++) {
+//                    Vec3 pixelCenter = pixel00Loc
+//                            .plus(pixelDeltaU.times(i))
+//                            .plus(pixelDeltaV.times(j));
+//                    Vec3 rayDirection = pixelCenter.minus(center);
+//                    Ray r = new Ray(center, rayDirection);
+//
+//                    Vec3 pixelColor = rayColor(r, world);
+//                    Color.writeColor(out, pixelColor);
+//                }
                 for (int i = 0; i < imageWidth; i++) {
-                    Vec3 pixelCenter = pixel00Loc
-                            .plus(pixelDeltaU.times(i))
-                            .plus(pixelDeltaV.times(j));
-                    Vec3 rayDirection = pixelCenter.minus(center);
-                    Ray r = new Ray(center, rayDirection);
-
-                    Vec3 pixelColor = rayColor(r, world);
-                    Color.writeColor(out, pixelColor);
+                    Vec3 pixelColor = new Vec3(0, 0, 0);
+                    for (int sample = 0; sample < samplesPerPixel; sample++) {
+                        Ray r = getRay(i , j);
+                        pixelColor = pixelColor.plus(rayColor(r, world));
+                    }
+                    Color.writeColor(out, pixelColor.times(pixelSamplesScale));
                 }
             }
 
@@ -41,9 +51,28 @@ public class Camera {
         }
     }
 
+    private Ray getRay(int i, int j) {
+        // Construct a camera ray originating form the origin and directed at a randomly
+        // sampled point around the pixel lcoation i, j.
+        Vec3 offset = sampleSquare();
+        Vec3 pixelSample = pixel00Loc
+                .plus(pixelDeltaU.times(i + offset.x()))
+                .plus(pixelDeltaV.times(j + offset.y()));
+
+        Vec3 rayOrigin = center;
+        Vec3 rayDirection = pixelSample.minus(rayOrigin);
+        return new Ray(rayOrigin, rayDirection);
+    }
+
+    private Vec3 sampleSquare() {
+        // Returns the vector to a random point in the [-0.5, -.5]-[+.5,+.5] unit square
+        return new Vec3(RtWeekend.randomDouble() - 0.5, RtWeekend.randomDouble() - 0.5, 0);
+    }
+
     private void initialize() {
         imageHeight = (int) (imageWidth / aspectRatio);
         imageHeight = Math.max(imageHeight, 1);
+        pixelSamplesScale = 1.0 / samplesPerPixel;
 
         center = new Vec3(0, 0, 0);
 

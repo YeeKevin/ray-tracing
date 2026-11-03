@@ -23,4 +23,10 @@ public record Interval(double min, double max) {
     public boolean surrounds(double x) {
         return min < x && x < max;
     }
+
+    public double clamp(double x) {
+        if (x < min) return min;
+        if (x > max) return max;
+        return x;
+    }
 }
