@@ -100,7 +100,8 @@ public class Camera {
     private Vec3 rayColor(Ray r, Hittable world) {
         HitRecord rec = new HitRecord();
         if (world.hit(r, new Interval(0, RtWeekend.INFINITY), rec)) {
-            return rec.normal.plus(new Vec3(1, 1, 1)).times(0.5);
+            Vec3 direction = Vec3.randomOnHemisphere(rec.normal);
+            return rayColor(new Ray(rec.p, direction), world).times(0.5);
         }
 
         Vec3 unitDirection = r.direction().unitVector();

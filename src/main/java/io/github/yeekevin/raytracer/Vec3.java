@@ -62,6 +62,35 @@ public record Vec3(double x, double y, double z) {
         return div(length());
     }
 
+    public static Vec3 random() {
+        return new Vec3(RtWeekend.randomDouble(), RtWeekend.randomDouble(), RtWeekend.randomDouble());
+    }
+
+    public static Vec3 random(double min, double max) {
+        return new Vec3(RtWeekend.randomDouble(min, max),
+                        RtWeekend.randomDouble(min, max),
+                        RtWeekend.randomDouble(min, max));
+    }
+
+    public static Vec3 randomUnitVector() {
+        while (true) {
+            Vec3 p = random(-1, 1);
+            double lensq = p.lengthSquared();
+            if (1e-160 < lensq && lensq <= 1) {
+                return p.div(Math.sqrt(lensq));
+            }
+        }
+    }
+
+    public static Vec3 randomOnHemisphere(Vec3 normal) {
+        Vec3 onUnitSphere = randomUnitVector();
+        if (onUnitSphere.dot(normal) > 0.0) { // In the same hemisphere as the normal
+            return onUnitSphere;
+        } else {
+            return onUnitSphere.negate();
+        }
+    }
+
     @Override
     public String toString() {
         return x + " " + y + " " + z;
