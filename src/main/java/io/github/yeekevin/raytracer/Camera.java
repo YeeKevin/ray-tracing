@@ -9,6 +9,7 @@ public class Camera {
     public double aspectRatio = 1.0;  // Ratio of image width over height
     public int imageWidth = 100;      // Rendered image width in pixel count
     public int samplesPerPixel = 10;  // Count of random samples for each pixel
+    public int maxDepth = 10;         // Maximum number of ray bounces into scene
 
     private int imageHeight;          // Rendered image height
     private Vec3 center;              // Camera center
@@ -27,21 +28,11 @@ public class Camera {
                 System.err.print("\rScanlines remaining: " + (imageHeight - j) + " ");
                 System.err.flush();
 
-//                for (int i = 0; i < imageWidth; i++) {
-//                    Vec3 pixelCenter = pixel00Loc
-//                            .plus(pixelDeltaU.times(i))
-//                            .plus(pixelDeltaV.times(j));
-//                    Vec3 rayDirection = pixelCenter.minus(center);
-//                    Ray r = new Ray(center, rayDirection);
-//
-//                    Vec3 pixelColor = rayColor(r, world);
-//                    Color.writeColor(out, pixelColor);
-//                }
                 for (int i = 0; i < imageWidth; i++) {
                     Vec3 pixelColor = new Vec3(0, 0, 0);
                     for (int sample = 0; sample < samplesPerPixel; sample++) {
                         Ray r = getRay(i , j);
-                        pixelColor = pixelColor.plus(rayColor(r, world));
+                        pixelColor = pixelColor.plus(rayColor(r, maxDepth, world));
                     }
                     Color.writeColor(out, pixelColor.times(pixelSamplesScale));
                 }
@@ -97,11 +88,16 @@ public class Camera {
         pixel00Loc = viewportUpperLeft.plus(pixelDeltaU.plus(pixelDeltaV).times(0.5));
     }
 
-    private Vec3 rayColor(Ray r, Hittable world) {
+    private Vec3 rayColor(Ray r, int depth, Hittable world) {
+        // If we've exceeded the ray bounce limit, no more light is gathered
+        if (depth <= 0) {
+            return new Vec3(0, 0, 0);
+        }
+
         HitRecord rec = new HitRecord();
         if (world.hit(r, new Interval(0, RtWeekend.INFINITY), rec)) {
             Vec3 direction = Vec3.randomOnHemisphere(rec.normal);
-            return rayColor(new Ray(rec.p, direction), world).times(0.5);
+            return rayColor(new Ray(rec.p, direction), depth - 1, world).times(0.5);
         }
 
         Vec3 unitDirection = r.direction().unitVector();
