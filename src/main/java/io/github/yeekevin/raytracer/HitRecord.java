@@ -3,6 +3,7 @@ package io.github.yeekevin.raytracer;
 public class HitRecord {
     public Vec3 p;
     public Vec3 normal;
+    public Material mat;
     public double t;
     public boolean frontFace;
 
@@ -16,6 +17,7 @@ public class HitRecord {
     public void copyFrom(HitRecord other) {
         this.p = other.p;
         this.normal = other.normal;
+        this.mat = other.mat;
         this.t = other.t;
         this.frontFace = other.frontFace;
     }

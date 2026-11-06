@@ -3,10 +3,12 @@ package io.github.yeekevin.raytracer;
 public class Sphere implements Hittable {
     private final Vec3 center;
     private final double radius;
+    private final Material mat;
 
-    public Sphere(Vec3 center, double radius) {
+    public Sphere(Vec3 center, double radius, Material mat) {
         this.center = center;
         this.radius = Math.max(0, radius);
+        this.mat = mat;
     }
 
     @Override
@@ -36,6 +38,7 @@ public class Sphere implements Hittable {
         rec.p = r.at(rec.t);
         Vec3 outwardNormal = rec.p.minus(center).div(radius);
         rec.setFaceNormal(r, outwardNormal);
+        rec.mat = mat;
         return true;
     }
 }

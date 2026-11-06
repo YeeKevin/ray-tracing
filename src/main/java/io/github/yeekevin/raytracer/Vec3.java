@@ -91,6 +91,16 @@ public record Vec3(double x, double y, double z) {
         }
     }
 
+    public boolean nearZero() {
+        // Return true if the vector is close to zero in all dimensions
+        double s = 1e-8;
+        return Math.abs(x) < s && Math.abs(y) < s && Math.abs(z) < s;
+    }
+
+    public static Vec3 reflect(Vec3 v, Vec3 n) {
+        return v.minus(n.times(2 * v.dot(n)));
+    }
+
     @Override
     public String toString() {
         return x + " " + y + " " + z;
