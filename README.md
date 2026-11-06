@@ -13,7 +13,7 @@ The point is to learn how ray tracing works and get more practice with Java. It 
 - [x] Adding a sphere
 - [x] Surface normals and multiple objects
 - [x] Antialiasing
-- [ ] Diffuse materials
+- [x] Diffuse materials
 - [ ] Metal
 - [ ] Dielectrics
 - [ ] Positionable camera
