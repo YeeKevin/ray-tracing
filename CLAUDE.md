@@ -22,7 +22,8 @@ Learning project: a listing-by-listing Java port of the book (v4.0.2).
 - Build, then show the diff before committing
 - Conventional Commits, e.g. feat(material): add Metal material
 - Ask before adding dependencies
+- After changes, run `./gradlew run && open -a Preview image.ppm` so I can check the render before committing
 - After finishing a listing or section, update the Progress section of this file
 
 ## Progress
-Done through Listing 68 (metal spheres). Next: fuzzy reflection, section 10.6.
+Done through Listing 70 (fuzzy metal spheres). Next: dielectrics, section 11.
