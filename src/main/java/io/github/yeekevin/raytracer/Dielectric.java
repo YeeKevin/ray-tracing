@@ -23,7 +23,7 @@ public class Dielectric implements Material {
         boolean cannotRefract = ri * sinTheta > 1.0;
         Vec3 direction;
 
-        if (cannotRefract) {
+        if (cannotRefract || reflectance(cosTheta, ri) > RtWeekend.randomDouble()) {
             // Must Reflect
             direction = Vec3.reflect(unitDirection, rec.normal);
         } else {
@@ -33,5 +33,12 @@ public class Dielectric implements Material {
 
         Ray scattered = new Ray(rec.p, direction);
         return Optional.of(new ScatterResult(attenuation, scattered));
+    }
+
+    private static double reflectance(double cosine, double refractionIndex) {
+        // Use Schlick's approximation for reflectance.
+        double r0 = (1 - refractionIndex) / (1 + refractionIndex);
+        r0 = r0 * r0;
+        return r0 + (1 - r0) * Math.pow((1 - cosine), 5);
     }
 }
