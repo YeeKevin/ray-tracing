@@ -19,3 +19,7 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+application {
+    mainClass = 'io.github.yeekevin.raytracer.Main'
+}
