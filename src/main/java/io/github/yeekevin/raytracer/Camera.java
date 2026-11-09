@@ -97,7 +97,7 @@ public class Camera {
         HitRecord rec = new HitRecord();
         if (world.hit(r, new Interval(0.001, RtWeekend.INFINITY), rec)) {
             return rec.mat.scatter(r, rec)
-                    .map(s -> s.attentuation().times(rayColor(s.scattered(), depth - 1, world)))
+                    .map(s -> s.attenuation().times(rayColor(s.scattered(), depth - 1, world)))
                     .orElse(new Vec3(0, 0, 0));
         }
 
