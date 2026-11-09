@@ -26,4 +26,4 @@ Learning project: a listing-by-listing Java port of the book (v4.0.2).
 - After finishing a listing or section, update the Progress section of this file
 
 ## Progress
-Done through Listing 73 (glass sphere that always refracts). Next: total internal reflection, section 11.3 (Listing 74).
+Done through Listing 77 (air bubble in water, total internal reflection). Next: Schlick approximation, Listing 78.
