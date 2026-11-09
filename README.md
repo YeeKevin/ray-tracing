@@ -14,8 +14,8 @@ The point is to learn how ray tracing works and get more practice with Java. It 
 - [x] Surface normals and multiple objects
 - [x] Antialiasing
 - [x] Diffuse materials
-- [ ] Metal
-- [ ] Dielectrics
+- [x] Metal
+- [x] Dielectrics
 - [ ] Positionable camera
 - [ ] Defocus blur
 - [ ] Final render
@@ -32,11 +32,10 @@ Some things that work differently from the book's C++:
 
 Requires a recent JDK (records and switch expressions are used).
 
-Run `org.example.Main` from your IDE, or from the command line:
+Run `io.github.yeekevin.raytracer.Main` from your IDE, or from the command line:
 
 ```sh
-./gradlew build
-java -cp build/classes/java/main io.github.yeekevin.raytracer.Main
+./gradlew run
 ```
 
 That writes `image.ppm` to the project root. You can open it with an image viewer that supports PPM, such as Preview on macOS, GIMP, or an online PPM viewer.
