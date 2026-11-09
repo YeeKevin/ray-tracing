@@ -101,6 +101,13 @@ public record Vec3(double x, double y, double z) {
         return v.minus(n.times(2 * v.dot(n)));
     }
 
+    public static Vec3 refract(Vec3 uv, Vec3 n, double etaiOverEtat) {
+        double cosTheta = Math.min(uv.negate().dot(n), 1.0);
+        Vec3 rOutPerp = uv.plus(n.times(cosTheta)).times(etaiOverEtat);
+        Vec3 rOutParallel = n.times(-Math.sqrt(Math.abs(1.0 - rOutPerp.lengthSquared())));
+        return rOutPerp.plus(rOutParallel);
+    }
+
     @Override
     public String toString() {
         return x + " " + y + " " + z;
