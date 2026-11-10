@@ -26,4 +26,4 @@ Learning project: a listing-by-listing Java port of the book (v4.0.2).
 - After finishing a listing or section, update the Progress section of this file
 
 ## Progress
-Done through Listing 81 (adjustable vfov + wide-angle two-sphere scene; section 12.1 complete). Next: Listing 82, positioning and orienting the camera (lookfrom/lookat/vup), section 12.2.
+Done through Listing 83 (positionable camera with lookfrom/lookat/vup; distant view of the three-sphere scene). Next: Listing 84, change field of view to 20 (finishes section 12), then defocus blur, section 13.
