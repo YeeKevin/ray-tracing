@@ -18,7 +18,7 @@ The point is to learn how ray tracing works and get more practice with Java. It 
 - [x] Dielectrics
 - [x] Positionable camera
 - [x] Defocus blur
-- [ ] Final render
+- [x] Final render
 
 ## Porting from C++ to Java
 

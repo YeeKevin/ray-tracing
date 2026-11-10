@@ -26,4 +26,4 @@ Learning project: a listing-by-listing Java port of the book (v4.0.2).
 - After finishing a listing or section, update the Progress section of this file
 
 ## Progress
-Done through Listing 87 (defocus blur / depth of field; section 13 complete). Next: Listing 88, final scene, section 14.
+Done through Listing 88 (final scene of random spheres; section 14 and the book complete). Next: nothing left in In One Weekend; The Next Week is the follow-on book.
