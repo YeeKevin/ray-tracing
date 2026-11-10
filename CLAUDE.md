@@ -26,4 +26,4 @@ Learning project: a listing-by-listing Java port of the book (v4.0.2).
 - After finishing a listing or section, update the Progress section of this file
 
 ## Progress
-Done through Listing 79 (hollow glass sphere; section 11 complete). Next: positionable camera, section 12.
+Done through Listing 81 (adjustable vfov + wide-angle two-sphere scene; section 12.1 complete). Next: Listing 82, positioning and orienting the camera (lookfrom/lookat/vup), section 12.2.

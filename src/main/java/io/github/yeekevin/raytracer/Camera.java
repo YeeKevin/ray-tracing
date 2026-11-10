@@ -11,6 +11,8 @@ public class Camera {
     public int samplesPerPixel = 10;  // Count of random samples for each pixel
     public int maxDepth = 10;         // Maximum number of ray bounces into scene
 
+    public double vfov = 90;          // Vertical view angle (field of view)
+
     private int imageHeight;          // Rendered image height
     private Vec3 center;              // Camera center
     private Vec3 pixel00Loc;          // Location of pixel 0, 0
@@ -69,7 +71,9 @@ public class Camera {
 
         // Determine viewport dimensions.
         double focalLength = 1.0;
-        double viewportHeight = 2.0;
+        double theta = RtWeekend.degreesToRadians(vfov);
+        double h = Math.tan(theta / 2);
+        double viewportHeight = 2 * h * focalLength;
         double viewportWidth = viewportHeight * ((double) imageWidth / imageHeight);
 
         // Calculate the vectors across the horizontal and down the vertical viewport edges.
