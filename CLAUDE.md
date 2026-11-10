@@ -26,4 +26,4 @@ Learning project: a listing-by-listing Java port of the book (v4.0.2).
 - After finishing a listing or section, update the Progress section of this file
 
 ## Progress
-Done through Listing 84 (vfov 20 zoomed view; section 12 complete). Next: Listing 85, defocus blur, section 13.
+Done through Listing 87 (defocus blur / depth of field; section 13 complete). Next: Listing 88, final scene, section 14.

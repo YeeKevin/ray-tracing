@@ -16,6 +16,9 @@ public class Camera {
     public Vec3 lookat = new Vec3(0, 0, -1);    // Point camera is looking at
     public Vec3 vup = new Vec3(0, 1, 0);        // Camera-relative "up" direction
 
+    public double defocusAngle = 0;  // Variation angle of rays through each pixel
+    public double focusDist = 10;    // Distance from camera lookfrom point to plane of perfect focus
+
     private int imageHeight;          // Rendered image height
     private Vec3 center;              // Camera center
     private Vec3 pixel00Loc;          // Location of pixel 0, 0
@@ -23,6 +26,8 @@ public class Camera {
     private Vec3 pixelDeltaV;         // Offset to pixel below
     private double pixelSamplesScale; // Color scale factor for a sum of pixel samples
     private Vec3 u, v, w;             // Camera frame basis vectors
+    private Vec3 defocusDiskU;        // Defocus disk horizontal radius
+    private Vec3 defocusDiskV;        // Defocus disk vertical radius
 
     public void render(Hittable world) throws IOException {
         initialize();
@@ -49,14 +54,14 @@ public class Camera {
     }
 
     private Ray getRay(int i, int j) {
-        // Construct a camera ray originating form the origin and directed at a randomly
-        // sampled point around the pixel lcoation i, j.
+        // Construct a camera ray originating from the defocus disk and directed at a randomly
+        // sampled point around the pixel location i, j.
         Vec3 offset = sampleSquare();
         Vec3 pixelSample = pixel00Loc
                 .plus(pixelDeltaU.times(i + offset.x()))
                 .plus(pixelDeltaV.times(j + offset.y()));
 
-        Vec3 rayOrigin = center;
+        Vec3 rayOrigin = (defocusAngle <= 0) ? center : defocusDiskSample();
         Vec3 rayDirection = pixelSample.minus(rayOrigin);
         return new Ray(rayOrigin, rayDirection);
     }
@@ -64,6 +69,12 @@ public class Camera {
     private Vec3 sampleSquare() {
         // Returns the vector to a random point in the [-0.5, -.5]-[+.5,+.5] unit square
         return new Vec3(RtWeekend.randomDouble() - 0.5, RtWeekend.randomDouble() - 0.5, 0);
+    }
+
+    private Vec3 defocusDiskSample() {
+        // Returns a random point in the camera defocus disk.
+        Vec3 p = Vec3.randomInUnitDisk();
+        return center.plus(defocusDiskU.times(p.x())).plus(defocusDiskV.times(p.y()));
     }
 
     private void initialize() {
@@ -74,10 +85,9 @@ public class Camera {
         center = lookfrom;
 
         // Determine viewport dimensions.
-        double focalLength = lookfrom.minus(lookat).length();
         double theta = RtWeekend.degreesToRadians(vfov);
         double h = Math.tan(theta / 2);
-        double viewportHeight = 2 * h * focalLength;
+        double viewportHeight = 2 * h * focusDist;
         double viewportWidth = viewportHeight * ((double) imageWidth / imageHeight);
 
         // Calculate the u,v,w unit basis vectors for the camera coordinate frame.
@@ -95,10 +105,15 @@ public class Camera {
 
         // Calculate the location of the upper left pixel.
         Vec3 viewportUpperLeft = center
-                .minus(w.times(focalLength))
+                .minus(w.times(focusDist))
                 .minus(viewportU.div(2))
                 .minus(viewportV.div(2));
         pixel00Loc = viewportUpperLeft.plus(pixelDeltaU.plus(pixelDeltaV).times(0.5));
+
+        // Calculate the camera defocus disk basis vectors.
+        double defocusRadius = focusDist * Math.tan(RtWeekend.degreesToRadians(defocusAngle / 2));
+        defocusDiskU = u.times(defocusRadius);
+        defocusDiskV = v.times(defocusRadius);
     }
 
     private Vec3 rayColor(Ray r, int depth, Hittable world) {

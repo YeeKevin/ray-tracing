@@ -72,6 +72,15 @@ public record Vec3(double x, double y, double z) {
                         RtWeekend.randomDouble(min, max));
     }
 
+    public static Vec3 randomInUnitDisk() {
+        while (true) {
+            Vec3 p = new Vec3(RtWeekend.randomDouble(-1, 1), RtWeekend.randomDouble(-1, 1), 0);
+            if (p.lengthSquared() < 1) {
+                return p;
+            }
+        }
+    }
+
     public static Vec3 randomUnitVector() {
         while (true) {
             Vec3 p = random(-1, 1);
