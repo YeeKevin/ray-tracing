@@ -26,7 +26,7 @@ public class Main {
         cam.samplesPerPixel = 100;
         cam.maxDepth = 50;
 
-        cam.vfov = 90;
+        cam.vfov = 20;
         cam.lookfrom = new Vec3(-2, 2, 1);
         cam.lookat = new Vec3(0, 0, -1);
         cam.vup = new Vec3(0, 1, 0);

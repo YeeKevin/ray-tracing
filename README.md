@@ -16,7 +16,7 @@ The point is to learn how ray tracing works and get more practice with Java. It 
 - [x] Diffuse materials
 - [x] Metal
 - [x] Dielectrics
-- [ ] Positionable camera
+- [x] Positionable camera
 - [ ] Defocus blur
 - [ ] Final render
 
